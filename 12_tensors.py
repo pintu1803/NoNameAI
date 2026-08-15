@@ -47,18 +47,35 @@ x.requires_grad_(True)
 z = x ** 2
 x.requires_grad_(False)
 
-###
-# if requires_grad is False for differentiator then differentiation will not be computed
-###
 
+# claim #1
 #since graph exists, it differentiates but does not store grad in x.grad as it's turned off
 z.backward()
 print("\nx grad after x.requires_grad freezed (but computation graph existed) : ", x.grad) # None
 print("torch version : ", torch.__version__)
 
 #explicit differentiation of z wrt x throws error as operation tracking for x is disabled
+#reason is that autograd.grad() generally computes and returns derivative, 
+#but since x does not have requires_grad = True, it denies computing upfront
 try:
     dz_dx = torch.autograd.grad(z, x)[0]
     print("dz_dx = ", dz_dx)
 except Exception as e:
     print("Exception e : ", e)
+
+
+
+## Code to confirm - claim #1
+# x = torch.tensor(2.0)
+# x.requires_grad_(True)
+# z = x ** 2
+# x.requires_grad_(False)
+
+# def hook(grad_inputs, grad_outputs):
+#     print("PowBackward0 actually ran")
+#     print("  grad_outputs (incoming):", grad_outputs)
+#     print("  grad_inputs (computed):", grad_inputs)
+
+# z.grad_fn.register_hook(hook)
+# z.backward()
+# print("x.grad after backward:", x.grad)
