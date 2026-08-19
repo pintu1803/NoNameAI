@@ -38,4 +38,8 @@ Inserting a non-linear function between the Linear layers break the "still just 
 Linear -> Activation -> Linear -> Activation -> Linear  => multi-layer perception
 
 Instead, torch provides nn.Sequential() which reduces the boilerplate code and provides same underlying mechanism.
+
+nn.MSELoss() for regression) and nn.CrossEntropyLoss() for classification
+CrossEntropyLoss expects raw logits and applies log_softmax internally ->
+so we don't manually apply softmax before this loss.
 """
