@@ -32,3 +32,10 @@ Leaky ReLU is used when dead neurons(dead ReLU) becomes a concern
 Softmax is used in multi-class-output-layer when we want the output as probabilities s.t. sum of all is 1.
 
 """
+
+"""
+Inserting a non-linear function between the Linear layers break the "still just one big linear equation" collapse.
+Linear -> Activation -> Linear -> Activation -> Linear  => multi-layer perception
+
+Instead, torch provides nn.Sequential() which reduces the boilerplate code and provides same underlying mechanism.
+"""
