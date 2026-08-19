@@ -1,3 +1,4 @@
+##19/08/2026
 ### Activation functions.
 """
 Sigmoid
