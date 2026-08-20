@@ -66,8 +66,8 @@ print("\nSequential model is : ", model)
 print("Loss criterion is : ", criterion)
 print("Optimizer is : ", optimizer)
 
-for epoch in range(10):
-    print(f"\nEpoch : {epoch}")
+for epoch in range(1000):
+    # print(f"\nEpoch : {epoch}")
 
     pred = model(x)
 
@@ -79,7 +79,8 @@ for epoch in range(10):
 
     optimizer.step()
 
-    print("Loss computed : ", loss.item())
+    if(epoch % 100 == 0):
+        print("Loss computed : ", loss.item())
 
 
 print("Now lets predict")
