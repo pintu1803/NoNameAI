@@ -47,8 +47,8 @@ so we don't manually apply softmax before this loss.
 import torch
 import torch.nn as nn
 
-x = torch.tensor([ [-3.], [4.], [0.], [-2.], [1.], [7.], [-9.], [2.], [3.] ] )
-y = torch.tensor([ [9.], [16.], [0.], [4.], [1.], [49.], [81.], [4.], [9.] ])
+x = torch.arange(100, dtype=torch.float32).reshape(100, 1)
+y = x ** 2
 
 model = nn.Sequential(
     nn.Linear(1,4),
@@ -60,7 +60,7 @@ model = nn.Sequential(
 
 criterion = nn.MSELoss()
 
-optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
 print("\nSequential model is : ", model)
 print("Loss criterion is : ", criterion)
@@ -79,7 +79,7 @@ for epoch in range(10):
 
     optimizer.step()
 
-    print("Loss computed : ", loss)
+    print("Loss computed : ", loss.item())
 
 
 print("Now lets predict")
