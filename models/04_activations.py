@@ -43,3 +43,45 @@ nn.MSELoss() for regression) and nn.CrossEntropyLoss() for classification
 CrossEntropyLoss expects raw logits and applies log_softmax internally ->
 so we don't manually apply softmax before this loss.
 """
+
+import torch
+import torch.nn as nn
+
+x = torch.tensor([ [-3.], [4.], [0.], [-2.], [1.], [7.], [-9.], [2.], [3.] ] )
+y = torch.tensor([ [9.], [16.], [0.], [4.], [1.], [49.], [81.], [4.], [9.] ])
+
+model = nn.Sequential(
+    nn.Linear(1,4),
+    nn.ReLU(),
+    nn.Linear(4,2),
+    nn.ReLU(),
+    nn.Linear(2,1)
+)
+
+criterion = nn.MSELoss()
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+
+print("\nSequential model is : ", model)
+print("Loss criterion is : ", criterion)
+print("Optimizer is : ", optimizer)
+
+for epoch in range(10):
+    print(f"\nEpoch : {epoch}")
+
+    pred = model(x)
+
+    loss = criterion(pred, y)
+
+    optimizer.zero_grad()
+
+    loss.backward()
+
+    optimizer.step()
+
+    print("Loss computed : ", loss)
+
+
+print("Now lets predict")
+
+
