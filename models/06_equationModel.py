@@ -68,7 +68,9 @@ print("Loss criterion is : ", criterion)
 
 
 ### Start training here
-for epoch in range(5000):
+### for 5k epochs extrapolation does not yield accurate predictions
+### but for 15k it is comparatively more accurate; if not totally accurate.
+for epoch in range(15000):
     # model.train() # add this when our model has Dropout and Batch normalisation
 
     pred_y_train = model(x_train)
@@ -112,14 +114,15 @@ for i in range(10):
 ### Badly Fails for all the variations of hidden_dim
 #Extrapolation
 print("\nExtrapolation : ")
-X = torch.linspace(6, 8, 10).reshape(10, 1)
+extrapol_dim = 10
+X = torch.linspace(5, 6, extrapol_dim).reshape(extrapol_dim, 1)
 Y = make_labels(X)
 
 with torch.no_grad():
     test_pred = model(X)
 
 print("\nCompare predicted and labels from unseen testing data")
-for i in range(10):
+for i in range(extrapol_dim):
     print(f"X={X[i].item() : .2f} "
           f"actual={Y[i].item() : .4f} "
           f"pred={test_pred[i].item() : .4f} "
