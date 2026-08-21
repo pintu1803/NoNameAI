@@ -63,16 +63,14 @@ model.eval()
 with torch.inference_mode():
     pred_y_val = model(x_val)
     loss_val = criterion(pred_y_val, y_val)
-    print("Validation loss computed : ", loss_val.item())
+    print("\nValidation loss computed : ", loss_val.item())
 
 
 with torch.inference_mode():
     pred_y_test = model(x_test)
-    
-### Using some random portion of the trained data
-### to predict and compare with original labels
-with torch.no_grad():
-    pred = model(x)
+    loss_test = criterion(pred_y_test, y_test)
+    print("\nTesting loss computed : ", loss_test.item())
+
 
 print("\nCompare pred and labels from original dataset")
 for i in range(1,100,5):
