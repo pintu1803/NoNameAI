@@ -41,21 +41,34 @@ print("Loss criterion is : ", criterion)
 
 ### Start training here
 for epoch in range(5000):
-    pred = model(x)
+    model.train()
 
-    loss = criterion(pred, y)
+    pred_y_train = model(x_train)
+
+    loss_train = criterion(pred_y_train, y_train)
 
     optimizer.zero_grad()
 
-    loss.backward()
+    loss_train.backward()
 
     optimizer.step()
 
     if(epoch % 500 == 0):
-        print("Loss computed - Epoch : {epoch}: ", loss.item())
+        print("Training loss computed - Epoch : {epoch}: ", loss_train.item())
 
-print("Now lets predict")
 
+### Validation step
+model.eval()
+
+with torch.inference_mode():
+    pred_y_val = model(x_val)
+    loss_val = criterion(pred_y_val, y_val)
+    print("Validation loss computed : ", loss_val.item())
+
+
+with torch.inference_mode():
+    pred_y_test = model(x_test)
+    
 ### Using some random portion of the trained data
 ### to predict and compare with original labels
 with torch.no_grad():
