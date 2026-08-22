@@ -48,3 +48,19 @@ print(d4)
 #only last dim is flattened, (leftmost dim is omitted, others remain)
 print(d3.tolist())
 print(d3[0].tolist())
+
+
+
+# Bias–Variance Tradeoff (the theory behind underfitting and overfitting)
+# Learning curves (how to diagnose training from loss plots)
+# Data augmentation (another way to improve generalization)
+# Batch Normalization (what it does and why it's used)
+# Learning rate scheduling
+# Then move toward CNNs and eventually Transformers.
+
+# The bias–variance topic will tie together almost everything we've learned so far and answer questions like:
+
+# When should I increase model size?
+# When should I add regularization?
+# When do I need more data instead?
+# Why do some huge models generalize better than smaller ones?
