@@ -15,14 +15,18 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 #random split for train and validation
 from torch.utils.data import random_split
+#dataset download or not
+from config import DatasetConfig
 
 def get_dataloaders():
     dataset = torchvision.datasets.MNIST
 
     #download data first, then make download False and use offline dataset
-    dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/train_data", train=True, download=False)
+    dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/train_data", 
+                                         train=True, download=DatasetConfig.downloadTrain)
 
-    test_dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/test_data", train=False, download=False)
+    test_dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/test_data", 
+                                              train=False, download=DatasetConfig.downloadTest)
 
 
     #analyse the dataset briefly
