@@ -1,4 +1,4 @@
-from mnist import get_dataloaders
+from deep_models.mnist_project.dataset import get_dataloaders
 from config import ModelConfig
 from model import MNISTModel
 from train import train_model
