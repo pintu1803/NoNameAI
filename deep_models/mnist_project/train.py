@@ -40,8 +40,12 @@ def train_model(modelObj, train_loader, val_loader):
             loss = loss_fn(pred, label)  
             val_loss += loss   
 
+        #find average loss of all batches
+        avg_train_loss = train_loss/len(train_loader)
+        avg_val_loss = val_loss/len(val_loader)
+
         #print for every checkpoint-th epoch
         if epoch % checkpoint == 0:
             print(f"\nLoss computed - epoch : {epoch}")
-            print(f"Train Loss : {train_loss : .3f}, Validation Loss : {val_loss : .3f}")
+            print(f"Avg Train Loss : {avg_train_loss : .3f}, Avg Validation Loss : {avg_val_loss : .3f}")
 

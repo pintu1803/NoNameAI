@@ -12,5 +12,5 @@ def test_model(modelObj, test_loader):
 
         #print for every 10th batch
         if idx % 10 == 0:
-            print(f"\nLoss computed - epoch : {idx}")
+            print(f"\nLoss computed - Batch : {idx}")
             print(f"Testing Loss : {loss : .3f}")
