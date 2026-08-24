@@ -18,14 +18,24 @@ from torch.utils.data import random_split
 #dataset download or not
 from config import DatasetConfig
 
+#import dataset dir from config
+from config import BASE_DIR
+
 def get_dataloaders():
+
+    TRAIN_DATA_DIR = BASE_DIR / "train_data"
+    TRAIN_DATA_DIR.mkdir(exist_ok=True)
+
+    TEST_DATA_DIR = BASE_DIR / "test_data"
+    TEST_DATA_DIR.mkdir(exist_ok=True)
+
     dataset = torchvision.datasets.MNIST
 
     #download data first, then make download False and use offline dataset
-    dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/train_data", 
+    dataset = torchvision.datasets.MNIST(root=TRAIN_DATA_DIR, 
                                          train=True, download=DatasetConfig.downloadTrain)
 
-    test_dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/test_data", 
+    test_dataset = torchvision.datasets.MNIST(root=TEST_DATA_DIR, 
                                               train=False, download=DatasetConfig.downloadTest)
 
 
@@ -50,7 +60,7 @@ def get_dataloaders():
     #reload dataset and convert into tensors
     #transform converts PIL object -> tensor
     #normalized values between 0 t0 1
-    dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/train_data", 
+    dataset = torchvision.datasets.MNIST(root=TRAIN_DATA_DIR, 
                                         train=True, download=False,
                                         transform=transform)
 
@@ -79,11 +89,11 @@ def get_dataloaders():
                                     )])
 
     #Reload dataset with new transform
-    dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/train_data", 
+    dataset = torchvision.datasets.MNIST(root=TRAIN_DATA_DIR, 
                                         train=True, download=False,
                                         transform=n_transform)
 
-    test_dataset = torchvision.datasets.MNIST(root="./deep_models/mnist_project/test_data", 
+    test_dataset = torchvision.datasets.MNIST(root=TEST_DATA_DIR, 
                                         train=False, download=False,
                                         transform=n_transform)
 

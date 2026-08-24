@@ -4,6 +4,7 @@ from config import TrainConfig
 import torch
 import os
 import matplotlib.pyplot as plt
+from config import BASE_DIR
 
 
 def train_model(modelObj, train_loader, val_loader):
@@ -46,7 +47,7 @@ def train_model(modelObj, train_loader, val_loader):
 
             #add loss for all batches
             #batch loss is avg loss, epoch loss we calculate as avg
-            train_loss += loss
+            train_loss += loss.item()
 
             _, predicted = torch.max(pred, 1)
             train_total += label.size(0)#tuple index 0
@@ -62,7 +63,7 @@ def train_model(modelObj, train_loader, val_loader):
         for image, label in val_loader:
             pred = modelObj.forward(image)
             loss = loss_fn(pred, label)  
-            val_loss += loss
+            val_loss += loss.item()
 
             _, predicted = torch.max(pred, 1)
             val_total += label.size(0)
@@ -73,8 +74,8 @@ def train_model(modelObj, train_loader, val_loader):
         avg_val_loss = val_loss/len(val_loader)
 
         #store the losses
-        train_losses.append(train_loss)
-        val_losses.append(val_loss)
+        train_losses.append(avg_train_loss)
+        val_losses.append(avg_val_loss)
 
         #compute the accuracy
         train_acc = 100 * train_correct / train_total
@@ -102,19 +103,19 @@ def train_model(modelObj, train_loader, val_loader):
 def save_model(model):
     print("\nMake checkpoints dir")
 
-    os.makedirs("checkpoints", exist_ok=True)
+    CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+    CHECKPOINT_DIR.mkdir(exist_ok=True)  
 
     torch.save(model.state_dict(),
-               "./deep_models/mnist_project/checkpoints/mnist_model.pth"
+               CHECKPOINT_DIR / "mnist_model.pth"
                )
-
-    print("\nModel state_dict : ", model.state_dict())
 
 
 #Loss plot
 def plot_loss_curve(train_losses, val_losses):
     #save in plots dir
-    os.makedirs("plots", exist_ok=True)
+    PLOTS_DIR = BASE_DIR / "plots"
+    PLOTS_DIR.mkdir(exist_ok=True)  
     
     plt.plot(train_losses, label="Train Loss")
     plt.plot(val_losses, label="Validation Loss")
@@ -124,7 +125,7 @@ def plot_loss_curve(train_losses, val_losses):
 
     plt.legend()
 
-    plt.savefig("./deep_models/mnist_project/plots/loss_curve.png",
+    plt.savefig(PLOTS_DIR/"loss_curve.png",
                 dpi=300,
                 bbox_inches="tight")
 
@@ -135,7 +136,8 @@ def plot_loss_curve(train_losses, val_losses):
 #Accuracy plot
 def plot_accuracy_curve(train_acc, val_acc):
     #save in plots dir
-    os.makedirs("plots", exist_ok=True)
+    PLOTS_DIR = BASE_DIR / "plots"
+    PLOTS_DIR.mkdir(exist_ok=True)
     
     plt.plot(train_acc, label="Train Accuracy")
     plt.plot(val_acc, label="Validation Accuracy")
@@ -145,7 +147,7 @@ def plot_accuracy_curve(train_acc, val_acc):
 
     plt.legend()
 
-    plt.savefig("./deep_models/mnist_project/plots/accuracy_curve.png",
+    plt.savefig(PLOTS_DIR/"accuracy_curve.png",
                 dpi=300,
                 bbox_inches="tight")
 
