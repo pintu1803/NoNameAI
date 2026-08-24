@@ -16,6 +16,12 @@ def train_model(modelObj, train_loader, val_loader):
 
     model = modelObj.deepModel
 
+    #Training loss and Validation loss
+    train_losses = []
+    val_losses = []
+    train_acc = []
+    val_acc = []
+
     #TRAIN and Validate
     for epoch in range(epochs):
 
@@ -45,6 +51,10 @@ def train_model(modelObj, train_loader, val_loader):
         #find average loss of all batches
         avg_train_loss = train_loss/len(train_loader)
         avg_val_loss = val_loss/len(val_loader)
+
+        #store the losses
+        train_losses.append(train_loss)
+        val_losses.append(val_loss)
 
         #print for every checkpoint-th epoch
         if epoch % checkpoint == 0:
