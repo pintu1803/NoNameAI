@@ -1,6 +1,8 @@
 ##Train configs are stored in config.py
 
 from config import TrainConfig
+import torch
+import os
 
 def train_model(modelObj, train_loader, val_loader):
     epochs = TrainConfig.epoch_count
@@ -49,3 +51,18 @@ def train_model(modelObj, train_loader, val_loader):
             print(f"\nLoss computed - epoch : {epoch}")
             print(f"Avg Train Loss : {avg_train_loss : .3f}, Avg Validation Loss : {avg_val_loss : .3f}")
 
+    ### Training finished.
+    ### save the model
+    save_model(model)
+
+
+def save_model(model):
+    print("\nMake checkpoints dir")
+
+    os.makedirs("checkpoints", exist_ok=True)
+
+    torch.save(model.state_dict(),
+               "./deep_models/mnist_project/checkpoints/mnist_model.pth"
+               )
+
+    print("\nModel state_dict : ", model.state_dict())
