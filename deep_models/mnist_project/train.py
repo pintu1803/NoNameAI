@@ -28,7 +28,12 @@ def train_model(modelObj, train_loader, val_loader):
         #Training mode ON
         model.train()
 
+        #accuracy and loss variables
+        train_correct = 0
+        train_total = 0
         train_loss = 0
+
+        #iterate all batches in one epoch
         for image, label in train_loader:
 
             pred = modelObj.forward(image)
@@ -37,6 +42,7 @@ def train_model(modelObj, train_loader, val_loader):
             loss.backward()
             optimizer.step()
             #add loss for all batches
+            #batch loss is avg loss, epoch loss we calculate as avg
             train_loss += loss
 
         #Validation mode ON
