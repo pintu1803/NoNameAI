@@ -22,7 +22,7 @@ class ModelConfig:
 
 @dataclass
 class TrainConfig:
-    epoch_count = 10
+    epoch_count = 20
     epoch_checkpoint = 1
 
 @dataclass
