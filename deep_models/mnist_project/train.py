@@ -5,6 +5,7 @@ import torch
 import os
 import matplotlib.pyplot as plt
 from config import BASE_DIR
+import utils
 
 
 def train_model(modelObj, train_loader, val_loader):
@@ -92,65 +93,17 @@ def train_model(modelObj, train_loader, val_loader):
 
     ### Training finished.
     ### save the model
-    save_model(model)
+    CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+    MODEL_NAME = "mnist_model.pth"
+    utils.save_model(model, CHECKPOINT_DIR, MODEL_NAME)
 
     ### Plot curves
-    plot_loss_curve(train_losses, val_losses)
-    plot_accuracy_curve(train_accs, val_accs)
+    PLOT_DIR = BASE_DIR / "plots"
+    LOSS_PLOT_NAME = PLOT_DIR / "loss_curve.png"
+    ACC_PLOT_NAME = PLOT_DIR / "acc_curve.png"
+    utils.plot_loss_curve(PLOT_DIR, LOSS_PLOT_NAME, train_losses, val_losses)
+    utils.plot_accuracy_curve(PLOT_DIR, ACC_PLOT_NAME, train_accs, val_accs)
 
 
-#Save model
-def save_model(model):
-    print("\nMake checkpoints dir")
-
-    CHECKPOINT_DIR = BASE_DIR / "checkpoints"
-    CHECKPOINT_DIR.mkdir(exist_ok=True)  
-
-    torch.save(model.state_dict(),
-               CHECKPOINT_DIR / "mnist_model.pth"
-               )
 
 
-#Loss plot
-def plot_loss_curve(train_losses, val_losses):
-    #save in plots dir
-    PLOTS_DIR = BASE_DIR / "plots"
-    PLOTS_DIR.mkdir(exist_ok=True)  
-    
-    plt.plot(train_losses, label="Train Loss")
-    plt.plot(val_losses, label="Validation Loss")
-
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-
-    plt.legend()
-
-    plt.savefig(PLOTS_DIR/"loss_curve.png",
-                dpi=300,
-                bbox_inches="tight")
-
-    plt.show(block=False)
-    plt.pause(10)
-    plt.close()
-
-#Accuracy plot
-def plot_accuracy_curve(train_acc, val_acc):
-    #save in plots dir
-    PLOTS_DIR = BASE_DIR / "plots"
-    PLOTS_DIR.mkdir(exist_ok=True)
-    
-    plt.plot(train_acc, label="Train Accuracy")
-    plt.plot(val_acc, label="Validation Accuracy")
-
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-
-    plt.legend()
-
-    plt.savefig(PLOTS_DIR/"accuracy_curve.png",
-                dpi=300,
-                bbox_inches="tight")
-
-    plt.show(block=False)
-    plt.pause(10)
-    plt.close()
