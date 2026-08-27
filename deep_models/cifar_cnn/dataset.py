@@ -2,6 +2,7 @@
 import torch
 import torchvision.datasets as datasets
 from torchvision import transforms
+from config import BASE_DIR
 
 """
 Images are tensors
@@ -26,13 +27,16 @@ Each output learns one feature.
 N filters learn N features about the image.
 """
 
+dataset_path = BASE_DIR / "train_data"
+print("Dataset download to or upload from : ", dataset_path)
+
 ## transform1 just converts values in tensors in range [0, 1]
 ## transform2 normalizes values in range [-1, 1] using mean = 0.5, std = 0.5
 
 # transform1 = transforms.ToTensor()
 transform2 = transforms.Compose([transforms.ToTensor(),
                                 transforms.Normalize(0.5, 0.5)])
-train = datasets.CIFAR10(root="./deep_models/cifar_cnn/dataset", 
+train = datasets.CIFAR10(root=dataset_path, 
                          download=False, train=True,
                          transform=transform2)
 
