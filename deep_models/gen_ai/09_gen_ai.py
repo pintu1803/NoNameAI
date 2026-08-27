@@ -4,6 +4,7 @@ from transformers import AutoModelForCausalLM
 import time
 
 from torch import cuda
+import torch
 
 # print("cuda status : ", cuda.is_available())
 # print("cuda device name : ", cuda.get_device_name() if cuda.is_available() else "No GPU")
@@ -19,25 +20,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name, cache_dir = cache_dir)
 while(True):
     user_input = input("\nEnter the prompt : ")
 
-    prompt = f"""
-    Answer the following question in one concise sentence.
-
-    Question:
-    {user_input}
-
-    Answer:
-    """
-
-    # messages = [
-    #     {"role": "user", "content": user_input}
-    # ]
-
-    # prompt = tokenizer.apply_chat_template(
-    #     messages,
-    #     tokenize=False,
-    #     add_generation_prompt=True
-    # )
-
+    prompt = user_input
 
     if user_input == "stop":
         print("Bye!")
@@ -53,11 +36,7 @@ while(True):
         do_sample=False
     )
 
-    print("\nShape of outputs : ", outputs.shape)
-
-    print("\nOutput : ", outputs)
-
-    print("\nOutput [0] : ", outputs[0])
+    # print("\nShape of outputs : ", outputs.shape)
 
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
@@ -76,3 +55,57 @@ A4: Set generation parameters. Temperature, sample, padding -> does not improve 
 
 Q2. 
 """
+
+#our implementation of model.generate()
+def generate(inputs):
+    with torch.no_grad():
+        for i in range(30):
+            output = model(**inputs)
+            # print(output.logits.shape)
+            logits = output.logits
+            next_pred_logits = logits[:, -1, :]
+            next_token = torch.argmax(next_pred_logits, dim=-1)
+            next_token_unsqueezed = torch.unsqueeze(next_token, dim=-1)
+
+            inputs["input_ids"] = torch.cat((inputs["input_ids"], next_token_unsqueezed), -1)
+            inputs["attention_mask"] = torch.cat((inputs["attention_mask"], torch.ones(1,1, dtype=torch.int64)), -1) 
+
+            response = tokenizer.decode(next_token_unsqueezed, skip_special_tokens=True)
+            print(response[0], end="")
+
+#This method only implements inference logic.
+#transformer's model.generate() do:
+"""
+Forward pass
+KV Cache
+EOS detection
+Temperature
+Top-k sampling
+Top-p sampling
+Beam Search
+Repetition penalty
+"""
+
+def input_to_prompt(user_input):
+    prompt = f"""
+    Answer the following question in one concise sentence.
+
+    Question:
+    {user_input}
+
+    Answer:
+    """
+    return prompt
+
+def input_to_chat_template(user_input):
+    messages = [
+        {"role": "user", "content": user_input}
+    ]
+
+    prompt = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+
+    return prompt
