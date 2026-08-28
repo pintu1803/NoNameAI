@@ -30,7 +30,21 @@ Each output learns one feature.
 N filters learn N features about the image.
 """
 
-def prepare_dataset():
+def prepare_testing_dataset():
+    dataset_path = BASE_DIR / "test_data"
+    print("\nTest dataset download to or upload from : ", dataset_path)
+
+    transform2 = transforms.Compose([transforms.ToTensor(),
+                                    transforms.Normalize(0.5, 0.5)])
+    test = datasets.CIFAR10(root=dataset_path, 
+                            download=True, train=False,
+                            transform=transform2)
+
+    test_loader = DataLoader(test, batch_size=TrainConfig.batch_size)
+    print("\nNumber of batches in testing set : ", len(test_loader))
+
+
+def prepare_training_dataset():
     dataset_path = BASE_DIR / "train_data"
     print("\nDataset download to or upload from : ", dataset_path)
 
@@ -78,3 +92,19 @@ def prepare_dataset():
                               drop_last=TrainConfig.drop_last_in_train_set)
 
     return train_loader, valid_loader
+
+
+
+###########
+###########
+
+def main():
+    train_loader, valid_loader = prepare_training_dataset()
+    test_loader = prepare_testing_dataset()
+    return train_loader, valid_loader, test_loader
+
+if __name__ == "__main__":
+    main()
+
+###########
+###########
