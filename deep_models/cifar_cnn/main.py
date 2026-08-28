@@ -1,3 +1,4 @@
+#CIFAR 10 
 
 import dataset
 import config
