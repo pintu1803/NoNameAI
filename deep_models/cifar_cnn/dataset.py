@@ -37,7 +37,7 @@ def prepare_testing_dataset():
     transform2 = transforms.Compose([transforms.ToTensor(),
                                     transforms.Normalize(0.5, 0.5)])
     test = datasets.CIFAR10(root=dataset_path, 
-                            download=True, train=False,
+                            download=False, train=False,
                             transform=transform2)
 
     test_loader = DataLoader(test, batch_size=TrainConfig.batch_size)
@@ -65,8 +65,11 @@ def prepare_training_dataset():
     print("Size of img : ", img.shape) # torch.Size([3, 32, 32])
     print("Size of dataset : ", len(train)) # 50000
 
+    print("\nType of label : ", type(label))
+    print("Value of label : ", label)
+
     flat_img = torch.flatten(img)
-    print("Number of pixel in image : ", flat_img.shape) # torch.Size([3072])
+    print("\nNumber of pixel in image : ", flat_img.shape) # torch.Size([3072])
     print("Min value of img pixel : ", torch.min(flat_img)) # tensor(-1.)
     print("Max value of img pixel : ", torch.max(flat_img)) # tensor(1.)
     # print("Mean of image : ", torch.mean(flat_img)) # tensor(-0.1886)
@@ -86,6 +89,15 @@ def prepare_training_dataset():
                             shuffle=TrainConfig.shuffle_train_set, 
                             drop_last=TrainConfig.drop_last_in_train_set)
     print("\nNumber of batches in training set : ", len(train_loader))
+
+    print("Type of train_loader : ", type(train_loader))
+
+    for image_batch, label_batch in train_loader:
+        print("\nType of image batch : ", type(image_batch))
+        print("Shape of image batch : ", image_batch.shape)
+        print("Type of batch label : ", type(label_batch))
+        print("Shape of batch label : ", label_batch.shape)
+        break
 
     valid_loader = DataLoader(valid_set, shuffle=TrainConfig.shuffle_train_set,
                               batch_size=TrainConfig.batch_size,
