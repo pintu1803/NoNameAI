@@ -87,14 +87,16 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
     LOSS_PLOT_NAME = PLOT_DIR / "train_vs_val_loss_curve.png"
     ACC_PLOT_NAME = PLOT_DIR / "train_vs_val_acc_curve.png"
     #### Training completed ####
-    utils.plot_train_vs_validation_curve(plot_name=LOSS_PLOT_NAME, 
+    utils.plot_train_vs_validation_curve(PLOTS_DIR=PLOT_DIR, 
+                                         plot_name=LOSS_PLOT_NAME, 
                                          first_item=train_losses,
                                          first_label="Training Loss", 
                                          second_label="Validation Loss",
                                          second_item=val_losses,
                                          xlabel="Epochs", ylabel="Loss")
 
-    utils.plot_train_vs_validation_curve(plot_name=ACC_PLOT_NAME,
+    utils.plot_train_vs_validation_curve(PLOTS_DIR= PLOT_DIR,
+                                         plot_name=ACC_PLOT_NAME,
                                          first_item=train_accuracies,
                                          second_item=val_accuracies,
                                          first_label="Training Accuracy",
