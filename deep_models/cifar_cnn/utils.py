@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 
 #Loss plot
 def plot_train_vs_validation_curve(PLOTS_DIR, plot_name, 
-                    first_item, first_label,
-                    second_item, second_label,
-                    xlabel, ylabel):
+                                    first_item, first_label,
+                                    second_item, second_label,
+                                    xlabel, ylabel):
     #save in plots dir
     PLOTS_DIR.mkdir(exist_ok=True)
     PLOT = PLOTS_DIR / plot_name

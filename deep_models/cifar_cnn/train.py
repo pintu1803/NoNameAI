@@ -91,15 +91,15 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
                                          plot_name=LOSS_PLOT_NAME, 
                                          first_item=train_losses,
                                          first_label="Training Loss", 
-                                         second_label="Validation Loss",
                                          second_item=val_losses,
+                                         second_label="Validation Loss",
                                          xlabel="Epochs", ylabel="Loss")
 
     utils.plot_train_vs_validation_curve(PLOTS_DIR= PLOT_DIR,
                                          plot_name=ACC_PLOT_NAME,
                                          first_item=train_accuracies,
-                                         second_item=val_accuracies,
                                          first_label="Training Accuracy",
+                                         second_item=val_accuracies,
                                          second_label="Validation Accuracy",
                                          xlabel="Epochs",
                                          ylabel="Accuracy")
