@@ -2,7 +2,7 @@
 import torch
 import torchvision.datasets as datasets
 from torchvision import transforms
-from config import BASE_DIR
+from config import PATH
 from config import TrainConfig
 from torch.utils.data import random_split
 from torch.utils.data import DataLoader
@@ -31,7 +31,7 @@ N filters learn N features about the image.
 """
 
 def prepare_testing_dataset():
-    dataset_path = BASE_DIR / "test_data"
+    dataset_path = PATH.TEST_DATA_DIR
     print("\nTest dataset download to or upload from : ", dataset_path)
 
     transform2 = transforms.Compose([transforms.ToTensor(),
@@ -43,9 +43,11 @@ def prepare_testing_dataset():
     test_loader = DataLoader(test, batch_size=TrainConfig.batch_size)
     print("\nNumber of batches in testing set : ", len(test_loader))
 
+    return test_loader
+
 
 def prepare_training_dataset():
-    dataset_path = BASE_DIR / "train_data"
+    dataset_path = PATH.TRAIN_DATA_DIR
     print("\nDataset download to or upload from : ", dataset_path)
 
     ## transform1 just converts values in tensors in range [0, 1]

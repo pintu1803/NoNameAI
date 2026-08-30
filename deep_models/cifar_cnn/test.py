@@ -1,6 +1,6 @@
 ##Contains absolute method, no method
 
-from config import BASE_DIR
+from config import PATH
 import utils
 import torch
 import torch.nn as nn
@@ -22,7 +22,7 @@ def test_model(modelObj, test_loader):
 
             #calculate loss and acc for this batch
             total = len(label)
-            correct += (label == pred.argmax(dim=-1)).sum()
+            correct = (label == pred.argmax(dim=-1)).sum()
             accuracy = correct*100/total
 
             #Store loss and acc
@@ -34,10 +34,16 @@ def test_model(modelObj, test_loader):
     moving_avg_acc = utils.moving_average(test_accuracy, 100)
 
     #Prepare dir and plot names
-    PLOTS_DIR = BASE_DIR / "plots"
+    PLOTS_DIR = PATH.PLOT_DIR
     LOSS_PLOT_NAME = PLOTS_DIR / "Test_loss_curve.png"
     ACC_PLOT_NAME = PLOTS_DIR / "Test_acc_curve.png"
 
     #Plot the loss and accuracy curves
-    utils.plot_testing_loss_curve(PLOTS_DIR, LOSS_PLOT_NAME, moving_avg_loss)
-    utils.plot_testing_accuracy_curve(PLOTS_DIR, ACC_PLOT_NAME, moving_avg_acc)
+    utils.plot_testing_curve_with_moving_avg(PLOTS_DIR, LOSS_PLOT_NAME, 
+                                            moving_avg_loss, "Testing Loss",
+                                            "Batch", "Loss")
+    
+    utils.plot_testing_curve_with_moving_avg(PLOTS_DIR, ACC_PLOT_NAME, 
+                                             moving_avg_acc, "Testing Accuracy",
+                                             "Batch", "Loss")
+

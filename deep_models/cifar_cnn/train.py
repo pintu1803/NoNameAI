@@ -1,5 +1,5 @@
 from config import TrainConfig
-from config import BASE_DIR
+from config import PATH
 import torch.nn as nn
 import torch.optim as optim
 import utils
@@ -83,7 +83,7 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
         
 
     # Dir
-    PLOT_DIR = BASE_DIR / "plots"
+    PLOT_DIR = PATH.PLOT_DIR
     LOSS_PLOT_NAME = PLOT_DIR / "train_vs_val_loss_curve.png"
     ACC_PLOT_NAME = PLOT_DIR / "train_vs_val_acc_curve.png"
     #### Training completed ####
@@ -103,4 +103,9 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
                                          second_label="Validation Accuracy",
                                          xlabel="Epochs",
                                          ylabel="Accuracy")
+
+    ### Save the model
+    CHECKPOINT_DIR = PATH.CHECKPOINT_DIR
+    MODEL_NAME = "cifar10_cnn_model.pth"
+    utils.save_trained_parameters(model, CHECKPOINT_DIR, MODEL_NAME)
     

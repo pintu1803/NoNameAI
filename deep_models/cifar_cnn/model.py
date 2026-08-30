@@ -25,7 +25,7 @@ class cnn_model():
                       stride=self.stride,
                       padding=self.padding),
             nn.ReLU(),
-            # nn.MaxPool2d(self.max_pool_size),
+            nn.MaxPool2d(self.max_pool_size),
 
             #layer-2
             nn.Conv2d(in_channels=self.out_channel1, 
@@ -56,7 +56,8 @@ class cnn_model():
 
     def linear_layer1_input(self):
         # return self.out_channel3 * self.image_height * self.image_width
-        return 64 * self.out_channel3
+        return 16 * self.out_channel3
+        # return 64 * self.out_channel3
 
     def forward(self, input):
         return self.model(input)

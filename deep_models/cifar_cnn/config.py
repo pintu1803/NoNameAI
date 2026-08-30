@@ -12,7 +12,7 @@ print("Project Base dir : ", BASE_DIR)
 class TrainConfig:
     train_percent: float = 0.8
     valid_percent: float = 0.2
-    epoch_count: int = 2
+    epoch_count: int = 10
     epoch_checkpoint: int = 1
     batch_size: int = 64
     shuffle_train_set: bool = True
@@ -35,3 +35,11 @@ class ModelConfig:
     stride: int = 1
     max_pool_size: int = 2 
     classification_count: int = 10
+
+@dataclass
+class PATH:
+    CHECKPOINT_DIR: str = BASE_DIR / "checkpoints"
+    MODEL_PATH: str = CHECKPOINT_DIR / "cifar10_cnn_model.pth"
+    TRAIN_DATA_DIR: str = BASE_DIR / "train_data"
+    TEST_DATA_DIR: str = BASE_DIR / "test_data"
+    PLOT_DIR: str = BASE_DIR / "plots"
