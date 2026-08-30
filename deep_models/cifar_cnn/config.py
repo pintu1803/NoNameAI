@@ -12,7 +12,7 @@ print("Project Base dir : ", BASE_DIR)
 class TrainConfig:
     train_percent: float = 0.8
     valid_percent: float = 0.2
-    epoch_count: int = 10
+    epoch_count: int = 2
     epoch_checkpoint: int = 1
     batch_size: int = 64
     shuffle_train_set: bool = True

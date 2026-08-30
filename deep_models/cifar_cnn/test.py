@@ -22,8 +22,7 @@ def test_model(modelObj, test_loader):
 
             #calculate loss and acc for this batch
             total = len(label)
-            _, predicted = torch.max(pred, 1)
-            correct = (predicted == label).sum().item()
+            correct += (label == pred.argmax(dim=-1)).sum()
             accuracy = correct*100/total
 
             #Store loss and acc
