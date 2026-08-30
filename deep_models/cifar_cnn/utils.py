@@ -11,8 +11,8 @@ def plot_train_vs_validation_curve(PLOTS_DIR, plot_name,
     PLOTS_DIR.mkdir(exist_ok=True)
     PLOT = PLOTS_DIR / plot_name
     
-    plt.plot(first_item, first_label)
-    plt.plot(second_item, second_label)
+    plt.plot(first_item, label=first_label)
+    plt.plot(second_item, label=second_label)
 
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
