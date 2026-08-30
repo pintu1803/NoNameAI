@@ -29,6 +29,10 @@ def test_model(modelObj, test_loader):
             test_losses.append(loss.item())
             test_accuracy.append(accuracy)
 
+    #Overall accuracy of the model
+    acc = (sum(test_accuracy)/len(test_accuracy)).item()
+    print(f"Overall testing accuracy : {acc : .3f} %")
+
     #inference mode ends here
     moving_avg_loss = utils.moving_average(test_losses, 100)
     moving_avg_acc = utils.moving_average(test_accuracy, 100)
