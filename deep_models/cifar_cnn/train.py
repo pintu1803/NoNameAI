@@ -23,6 +23,8 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
     val_losses = []
     val_accuracies = []
 
+    print("\nTRAINING BEGINS\n")
+    
     #Training and validation epochs start
     for epoch in range(epochs):
 
