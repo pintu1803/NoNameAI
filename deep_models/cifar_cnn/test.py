@@ -17,7 +17,7 @@ def test_model(modelObj, test_loader):
 
     with torch.inference_mode():
         for idx, (image, label) in enumerate(test_loader):
-            pred = modelObj.forward(image)
+            pred = modelObj.model(image)
             loss = loss_fn(pred, label)  
 
             #calculate loss and acc for this batch

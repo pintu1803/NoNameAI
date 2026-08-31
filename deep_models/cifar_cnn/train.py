@@ -34,7 +34,7 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
         batch_count = 0
 
         for idx, (image, label) in enumerate(train_loader):
-            prediction = model.forward(image)
+            prediction = model(image)
             loss = loss_fn(prediction, label)
             optimizer.zero_grad()
             loss.backward()
@@ -61,7 +61,7 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
         batch_count = 0
         
         for idx, (image, label) in enumerate(valid_loader):
-            pred = model.forward(image)
+            pred = model(image)
             loss = loss_fn(pred, label)
 
             epoch_valid_loss += loss.mean().item()

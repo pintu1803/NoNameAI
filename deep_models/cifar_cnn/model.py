@@ -1,9 +1,11 @@
 
 import torch.nn as nn
+import math
 
-class cnn_model():
+class cnn_model(nn.Module):
 
     def __init__(self, tc):
+        super().__init__()
         self.image_height = tc.image_height
         self.image_width = tc.image_width
         self.kernel_size = tc.kernel_size
@@ -55,10 +57,28 @@ class cnn_model():
         )
 
     def linear_layer1_input(self):
-        # return self.out_channel3 * final_height_after_2d_pool * final_width_after_pool
-        # return 16 * self.out_channel3
-        return 64 * self.out_channel3
+        def conv_out(image_size):
+            return math.floor((image_size + 2*self.padding - self.kernel_size) / self.stride) + 1
 
-    def forward(self, input):
-        return self.model(input)
-    
+        def pool_out(image_size):
+            return math.floor(image_size/self.max_pool_size)
+
+        #conv layer-1
+        h1 = conv_out(self.image_height)
+        w1 = conv_out(self.image_width)
+
+        #conv layer-2
+        h2 = conv_out(h1)
+        w2 = conv_out(w1)
+
+        h2 = pool_out(h2)
+        w2 = pool_out(w2)
+
+        #conv layer-3
+        h3 = conv_out(h2)
+        w3 = conv_out(w2)
+
+        h3 = pool_out(h3)
+        w3 = pool_out(w3)
+
+        return self.out_channel3 * w3 * h3
