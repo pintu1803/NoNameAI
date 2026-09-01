@@ -41,8 +41,8 @@ def test_model(modelObj, test_loader):
     #Prepare dir and plot names
     PLOTS_DIR = PATH.PLOT_DIR
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    LOSS_PLOT_NAME = PLOTS_DIR / "Test_loss_curve_{timestamp}.png"
-    ACC_PLOT_NAME = PLOTS_DIR / "Test_acc_curve_{timestamp}.png"
+    LOSS_PLOT_NAME = PLOTS_DIR / f"Test_loss_curve_{timestamp}.png"
+    ACC_PLOT_NAME = PLOTS_DIR / f"Test_acc_curve_{timestamp}.png"
 
     #Plot the loss and accuracy curves
     utils.plot_testing_curve_with_moving_avg(PLOTS_DIR, LOSS_PLOT_NAME, 

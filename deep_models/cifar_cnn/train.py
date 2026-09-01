@@ -109,8 +109,8 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
     # Dir
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     PLOT_DIR = PATH.PLOT_DIR
-    LOSS_PLOT_NAME = PLOT_DIR / "train_vs_val_loss_curve_{timestamp}.png"
-    ACC_PLOT_NAME = PLOT_DIR / "train_vs_val_acc_curve_{timestamp}.png"
+    LOSS_PLOT_NAME = PLOT_DIR / f"train_vs_val_loss_curve_{timestamp}.png"
+    ACC_PLOT_NAME = PLOT_DIR / f"train_vs_val_acc_curve_{timestamp}.png"
 
     #### Training completed ####
     utils.plot_train_vs_validation_curve(PLOTS_DIR=PLOT_DIR, 
