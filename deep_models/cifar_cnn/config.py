@@ -22,6 +22,7 @@ class TrainConfig:
 
     learning_rate: float = 0.005
     weigth_decay: float = 0.01
+    SAVE_MODEL_NAME: str = "cifar10_cnn_model.pth"
 
 @dataclass
 class ModelConfig:
