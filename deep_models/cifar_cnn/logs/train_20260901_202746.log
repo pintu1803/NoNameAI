@@ -1,0 +1,143 @@
+Current workig dir :  D:\Projects\python\ai-lab\deep_models\cifar_cnn
+Project Base dir :  D:\Projects\python\ai-lab\deep_models\cifar_cnn
+
+Dataset download to or upload from :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\train_data
+Size of dataset :  50000
+Type of img :  <class 'torch.Tensor'>
+Size of img :  torch.Size([3, 32, 32])
+
+Type of label :  <class 'int'>
+Value of label :  7
+
+Number of pixel in image :  torch.Size([3072])
+Min value of img pixel :  tensor(-1.)
+Max value of img pixel :  tensor(0.8902)
+
+Number of batches in training set :  625
+Type of train_loader :  <class 'torch.utils.data.dataloader.DataLoader'>
+
+Type of image batch :  <class 'torch.Tensor'>
+Shape of image batch :  torch.Size([64, 3, 32, 32])
+Type of batch label :  <class 'torch.Tensor'>
+Shape of batch label :  torch.Size([64])
+
+Test dataset download to or upload from :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\test_data
+
+Number of batches in testing set :  157
+
+TRAINING BEGINS
+
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 1, acc :  56.641
+
+Epoch : 1
+Training loss :  1.512, acc :  44.460
+Validation loss :  1.216, acc :  56.641
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 2, acc :  65.976
+
+Epoch : 2
+Training loss :  1.052, acc :  62.140
+Validation loss :  0.956, acc :  65.976
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 3, acc :  74.549
+
+Epoch : 3
+Training loss :  0.844, acc :  70.240
+Validation loss :  0.733, acc :  74.549
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 4, acc :  76.482
+
+Epoch : 4
+Training loss :  0.725, acc :  74.533
+Validation loss :  0.670, acc :  76.482
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 5, acc :  78.676
+
+Epoch : 5
+Training loss :  0.641, acc :  77.570
+Validation loss :  0.627, acc :  78.676
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 6, acc :  79.527
+
+Epoch : 6
+Training loss :  0.585, acc :  79.507
+Validation loss :  0.615, acc :  79.527
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 7, acc :  80.899
+
+Epoch : 7
+Training loss :  0.543, acc :  80.842
+Validation loss :  0.564, acc :  80.899
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 8, acc :  81.941
+
+Epoch : 8
+Training loss :  0.505, acc :  82.425
+Validation loss :  0.542, acc :  81.941
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 9, acc :  82.472
+
+Epoch : 9
+Training loss :  0.467, acc :  83.680
+Validation loss :  0.519, acc :  82.472
+
+Make checkpoints dir
+
+Saving learned weights...
+Saved learned weights :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\checkpoints\cifar10_cnn_model.pth
+
+Saving the BEST model so far, at epoch : 10, acc :  84.085
+
+Epoch : 10
+Training loss :  0.446, acc :  84.370
+Validation loss :  0.483, acc :  84.085
+
+TESTING TIME
+
+Overall testing accuracy :  83.499 %

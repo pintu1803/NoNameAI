@@ -1,0 +1,69 @@
+Current workig dir :  D:\Projects\python\ai-lab\deep_models\cifar_cnn
+Project Base dir :  D:\Projects\python\ai-lab\deep_models\cifar_cnn
+
+Dataset download to or upload from :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\train_data
+Size of dataset :  50000
+Type of img :  <class 'torch.Tensor'>
+Size of img :  torch.Size([3, 32, 32])
+
+Type of label :  <class 'int'>
+Value of label :  7
+
+Number of pixel in image :  torch.Size([3072])
+Min value of img pixel :  tensor(-1.)
+Max value of img pixel :  tensor(0.9451)
+
+Number of batches in training set :  625
+Type of train_loader :  <class 'torch.utils.data.dataloader.DataLoader'>
+
+Type of image batch :  <class 'torch.Tensor'>
+Shape of image batch :  torch.Size([64, 3, 32, 32])
+Type of batch label :  <class 'torch.Tensor'>
+Shape of batch label :  torch.Size([64])
+
+Test dataset download to or upload from :  D:\Projects\python\ai-lab\deep_models\cifar_cnn\test_data
+
+Number of batches in testing set :  157
+
+TRAINING BEGINS
+
+Traceback (most recent call last):
+  File "D:\Projects\python\ai-lab\deep_models\cifar_cnn\main.py", line 23, in <module>
+    main()
+    ~~~~^^
+  File "D:\Projects\python\ai-lab\deep_models\cifar_cnn\main.py", line 16, in main
+    train.train_cifar_model(modelObj, train_loader, val_loader)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\python\ai-lab\deep_models\cifar_cnn\train.py", line 94, in train_cifar_model
+    epoch_avg_train_loss, epoch_train_accuracy = train()
+                                                 ~~~~~^^
+  File "D:\Projects\python\ai-lab\deep_models\cifar_cnn\train.py", line 37, in train
+    prediction = model(image)
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\container.py", line 253, in forward
+    input = module(input)
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\modules\pooling.py", line 224, in forward
+    return F.max_pool2d(
+           ~~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<5 lines>...
+        return_indices=self.return_indices,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\_jit_internal.py", line 637, in fn
+    return if_false(*args, **kwargs)
+  File "D:\Projects\python\ai-lab\.venv\Lib\site-packages\torch\nn\functional.py", line 837, in _max_pool2d
+    return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
