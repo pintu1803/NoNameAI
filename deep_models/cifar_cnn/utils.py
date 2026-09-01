@@ -81,3 +81,12 @@ def plot_testing_curve_with_moving_avg(PLOTS_DIR, plot_name,
     plt.show(block=False)
     plt.pause(10)
     plt.close()
+
+#print comparison table
+def print_comparison_table(train_loss, train_acc, val_loss, val_acc):
+
+    print("_"*65)
+    print("| train_losses | train_accuracies | val_losses | val_accuracies |")
+    for i in range(len(train_loss)):
+        print(f"| {train_loss[i] : ^12.2f} | {train_acc[i] : ^16.2f} | {val_loss[i] : ^10.2f} | {val_acc[i] : ^14.2f} |")
+    print("*"*65)

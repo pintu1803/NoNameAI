@@ -129,3 +129,6 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
                                          second_label="Validation Accuracy",
                                          xlabel="Epochs",
                                          ylabel="Accuracy")
+
+    print("\nPrint the comparison table\n")
+    utils.print_comparison_table(train_losses, train_accuracies, val_losses, val_accuracies)
