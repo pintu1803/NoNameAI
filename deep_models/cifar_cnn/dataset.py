@@ -5,7 +5,7 @@ from torchvision import transforms
 from config import PATH
 from config import TrainConfig
 from torch.utils.data import random_split
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Subset
 
 """
 Images are tensors
@@ -50,22 +50,46 @@ def prepare_training_dataset():
     dataset_path = PATH.TRAIN_DATA_DIR
     print("\nDataset download to or upload from : ", dataset_path)
 
+    ###########################################################
+    full_dataset = datasets.CIFAR10(root=dataset_path, 
+                                    download=False, train=True,
+                                    transform=None)
+
+    total_size = len(full_dataset)
+    print("Size of dataset : ", total_size) # 50000
+
+    random_perm = torch.randperm(total_size, generator=torch.Generator().manual_seed(77))
+    train_size = int(total_size * TrainConfig.train_percent)
+
+    ###########################################################
     ## transform1 just converts values in tensors in range [0, 1]
     ## transform2 normalizes values in range [-1, 1] using mean = 0.5, std = 0.5
 
     # transform1 = transforms.ToTensor()
-    transform2 = transforms.Compose([transforms.ToTensor(),
-                                    transforms.Normalize(0.5, 0.5)])
-    train = datasets.CIFAR10(root=dataset_path, 
-                            download=False, train=True,
-                            transform=transform2)
+    validation_transform = transforms.Compose([transforms.ToTensor(),
+                                                transforms.Normalize(TrainConfig.normMean, TrainConfig.normVar)])
+    train_transform_data_augment = transforms.Compose([transforms.RandomCrop(32, padding=4),
+                                                        transforms.RandomHorizontalFlip(),
+                                                        transforms.ToTensor(),
+                                                        transforms.Normalize(TrainConfig.normMean, TrainConfig.normVar)])
 
-    img, label = train[0]
-    total_size = len(train)
+    train_dataset = datasets.CIFAR10(root=dataset_path, 
+                                    download=False, train=True,
+                                    transform=train_transform_data_augment)
+    valid_dataset = datasets.CIFAR10(root=dataset_path, 
+                                    download=False, train=True,
+                                    transform=validation_transform)
+
+    train_indices = random_perm[:train_size]
+    valid_indices = random_perm[train_size:]
+
+    train_set = Subset(train_dataset, train_indices)
+    valid_set = Subset(valid_dataset, valid_indices)
+
+    img, label = train_set[0]
 
     print("Type of img : ",type(img)) # <class 'torch.Tensor'>
     print("Size of img : ", img.shape) # torch.Size([3, 32, 32])
-    print("Size of dataset : ", len(train)) # 50000
 
     print("\nType of label : ", type(label))
     print("Value of label : ", label)
@@ -76,15 +100,6 @@ def prepare_training_dataset():
     print("Max value of img pixel : ", torch.max(flat_img)) # tensor(1.)
     # print("Mean of image : ", torch.mean(flat_img)) # tensor(-0.1886)
     # print("Std of image : ", torch.std(flat_img)) # tensor(0.4077)
-
-    ###########################################################
-    train_size = int(total_size * TrainConfig.train_percent)
-    valid_size = int(total_size * TrainConfig.valid_percent)
-    train_set, valid_set = random_split(train, [train_size, valid_size],
-                                        generator=torch.Generator().manual_seed(77)) 
-
-    print("\nSize of training set : ", len(train_set))
-    print("Size of validation set : ", len(valid_set))
 
     ###########################################################
     train_loader = DataLoader(train_set, batch_size=TrainConfig.batch_size, 

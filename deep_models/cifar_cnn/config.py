@@ -10,6 +10,8 @@ print("Project Base dir : ", BASE_DIR)
 
 @dataclass
 class TrainConfig:
+    normMean: float = 0.5
+    normVar: float = 0.5
     train_percent: float = 0.8
     valid_percent: float = 0.2
     epoch_count: int = 10
