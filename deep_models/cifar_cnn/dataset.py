@@ -70,6 +70,11 @@ def prepare_training_dataset():
                                                 transforms.Normalize(TrainConfig.normMean, TrainConfig.normVar)])
     train_transform_data_augment = transforms.Compose([transforms.RandomCrop(32, padding=4),
                                                         transforms.RandomHorizontalFlip(),
+                                                        transforms.RandomRotation(10),
+                                                        transforms.ColorJitter(contrast=0.2,
+                                                                               saturation=0.2,
+                                                                               brightness=0.2,
+                                                                               hue=0.02),
                                                         transforms.ToTensor(),
                                                         transforms.Normalize(TrainConfig.normMean, TrainConfig.normVar)])
 

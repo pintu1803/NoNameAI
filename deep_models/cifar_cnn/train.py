@@ -18,9 +18,13 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
                             lr=TrainConfig.learning_rate,
                             weight_decay=TrainConfig.weigth_decay)
 
-    scheduler = optim.lr_scheduler.StepLR(optimizer=optimizer,
-                                          step_size=2,
-                                          gamma=0.5)
+    #Basic scheduler - only use for learning purpose, use cosine later
+    # scheduler1 = optim.lr_scheduler.StepLR(optimizer=optimizer,
+    #                                       step_size=2,
+    #                                       gamma=0.5)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer=optimizer,
+                                                     T_max=10,
+                                                     eta_min=1e-5)
 
     #make list of loss and accuracy
     train_losses = []
