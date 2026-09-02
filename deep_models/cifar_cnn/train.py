@@ -18,6 +18,10 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
                             lr=TrainConfig.learning_rate,
                             weight_decay=TrainConfig.weigth_decay)
 
+    scheduler = optim.lr_scheduler.StepLR(optimizer=optimizer,
+                                          step_size=2,
+                                          gamma=0.5)
+
     #make list of loss and accuracy
     train_losses = []
     train_accuracies = []
@@ -39,6 +43,7 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            scheduler.step()
 
             epoch_train_loss += loss.mean().item()
             epoch_train_correct_pred += (label == prediction.argmax(dim=-1)).sum()
@@ -87,7 +92,7 @@ def train_cifar_model(modelObj, train_loader, valid_loader):
     #Training and validation epochs start
     best_val_acc = 0
     CHECKPOINT_DIR = PATH.CHECKPOINT_DIR
-    MODEL_NAME = TrainConfig.SAVE_MODEL_NAME
+    MODEL_NAME = PATH.SAVE_MODEL_WITH_NAME
 
     for epoch in range(epochs):
 

@@ -22,7 +22,7 @@ class TrainConfig:
 
     learning_rate: float = 0.005
     weigth_decay: float = 0.01
-    SAVE_MODEL_NAME: str = "cifar10_cnn_model.pth"
+
 
 @dataclass
 class ModelConfig:
@@ -42,7 +42,9 @@ class ModelConfig:
 @dataclass
 class PATH:
     CHECKPOINT_DIR: str = BASE_DIR / "checkpoints"
-    MODEL_PATH: str = CHECKPOINT_DIR / "cifar10_cnn_model.pth"
+    SAVED_MODEL_FULL_PATH: str = CHECKPOINT_DIR / "cifar10_cnn_model_83_acc.pth"
+    SAVE_MODEL_WITH_NAME: str = "cifar10_cnn_model.pth"
+
     TRAIN_DATA_DIR: str = BASE_DIR / "train_data"
     TEST_DATA_DIR: str = BASE_DIR / "test_data"
     PLOT_DIR: str = BASE_DIR / "plots"
