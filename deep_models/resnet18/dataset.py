@@ -1,24 +1,10 @@
 
-import datasets
-import matplotlib.pyplot as plt
 from config import PATH
 from datasets import load_dataset
 from utils import myLog, addLine
 import utils
 
 def load_data_from_cache():
-    myLog("WELCOME TO RESNET18 FINE TUNING")
-
-    print("\nLoad the dataset from cache dir : ", PATH.DATASET_DIR)
-    dataset = load_dataset("bharat-raghunathan/indian-foods-dataset", cache_dir=PATH.DATASET_DIR)
-
-    print("\nDataset loaded.. Begin inspection")
-    print("\nWhat is our dataset?")
-    print("\nType: ", type(dataset))
-    print("\ndataset : ", dataset)
-
-    # inspect_dataset(dataset)
-
     """
     dataset : DatasetDict({
         train: Dataset({
@@ -41,6 +27,16 @@ def load_data_from_cache():
     label has one instance field/parameter called 'names'
     which is a list of actual str labels -so it names list is indexable
     """
+    myLog("WELCOME TO RESNET18 FINE TUNING")
+
+    print("\nLoad the dataset from cache dir : ", PATH.DATASET_DIR)
+    dataset = load_dataset("bharat-raghunathan/indian-foods-dataset", cache_dir=PATH.DATASET_DIR)
+
+    print("\nDataset loaded.. Begin inspection")
+    print("\nWhat is our dataset?")
+    print("\nType: ", type(dataset))
+    print("\ndataset : ", dataset)
+    return dataset
 
 ####################################
 ####################################
@@ -97,6 +93,14 @@ def inspect_dataset(dataset):
     label = dataset["train"].features["label"].names[image["label"]]
     utils.showImage(image, label)
 
-    ##########################################################
 
-load_data_from_cache()
+####################################
+####################################
+
+def main():
+    print(load_data_from_cache.__doc__)
+    dataset = load_data_from_cache()
+    inspect_dataset(dataset)
+
+if __name__ == "__main__":
+    main()
