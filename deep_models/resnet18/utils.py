@@ -1,22 +1,14 @@
 
 
-class Logger:
 
-    @staticmethod
-    def section(title):
-        print("\n")
-        print("=" * 80)
-        print(f" {title}")
-        print("=" * 80)
+def myLog(title):
+    margin = "*" * ((78 - len(title))//2)
+    print("\n")
+    print("=" * 80)
+    print(f"{margin} {title} {margin}")
+    print("=" * 80)
 
-    @staticmethod
-    def step(msg):
-        print(f"  ➜ {msg}")
-
-    @staticmethod
-    def success(msg):
-        print(f"  ✅ {msg}")
-
-    @staticmethod
-    def error(msg):
-        print(f"  ❌ {msg}")
+def addLine():
+    # print("\n")
+    print("=" * 80)
+    # print("\n")

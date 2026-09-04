@@ -2,10 +2,9 @@
 import datasets
 from config import PATH
 from datasets import load_dataset
-from utils import Logger
+from utils import myLog, addLine
 
-myLog = Logger()
-myLog.section("WELCOME TO RESNET18 FINE TUNING")
+myLog("WELCOME TO RESNET18 FINE TUNING")
 
 print("\nLoad the dataset from cache dir : ", PATH.DATASET_DIR)
 dataset = load_dataset("bharat-raghunathan/indian-foods-dataset",
@@ -41,6 +40,7 @@ print("\nType : ", type(train))
 print("\nTrain set : ", train)
 print("\nType : ", type(test))
 print("\nTest set :", test)
+addLine()
 
 msg = f"\nTrain and Test are Dataset Objects unlike dataset which is a DefaultDict\n"
 print(msg)
@@ -65,6 +65,5 @@ try:
 except Exception as e:
     print("exp : ", e)
 
-print("\n")
-print("*"*70)
+addLine()
 ##########################################################
