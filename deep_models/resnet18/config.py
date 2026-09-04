@@ -14,6 +14,5 @@ class PATH:
     CHECKPOINT_DIR: str = BASE_DIR / "checkpoints"
     DOWNLOADE_MODEL_PATH: str = BASE_DIR / "model"
 
-    TRAIN_DATA_DIR: str = BASE_DIR / "train_data"
-    TEST_DATA_DIR: str = BASE_DIR / "test_data"
+    DATASET_DIR: str = BASE_DIR / "dataset"
     PLOT_DIR: str = BASE_DIR / "plots"
