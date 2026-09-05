@@ -21,3 +21,11 @@ class PATH:
 class IMAGE:
     height: int = 224
     width: int = 224
+
+@dataclass
+class TrainConfig:
+    train_percent = 0.85
+    valid_percent = 0.15
+    epochs_count = 20
+    batch_size = 32
+    test_batch_size = 16
