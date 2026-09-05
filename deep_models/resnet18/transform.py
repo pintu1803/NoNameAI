@@ -4,9 +4,11 @@ import utils
 
 def preprocessing_augmentation_transform():
     """
+    First of all, convert the image into RGB, if >3 channels exist, drop them.
     Mean and std are fixed and come from the original imagenet paper
     """
     train_transform = transforms.Compose([
+        transforms.Lambda(lambda img: img.convert("RGB")),
         transforms.Resize(size=(IMAGE.height, IMAGE.width)),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomRotation(degrees=20),
