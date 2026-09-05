@@ -88,10 +88,10 @@ def inspect_dataset(dataset):
     addLine()
     ##########################################################
 
-    image = train[0]
-    # label = dataset["train"].features["label"].int2str(image["label"])
-    label = dataset["train"].features["label"].names[image["label"]]
-    utils.showImage(image, label)
+    sample = train[0]
+    # label = dataset["train"].features["label"].int2str(sample["label"])
+    label = dataset["train"].features["label"].names[sample["label"]]
+    utils.showImage(sample, label)
 
 
 ####################################

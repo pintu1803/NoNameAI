@@ -16,3 +16,8 @@ class PATH:
 
     DATASET_DIR: str = BASE_DIR / "dataset"
     PLOT_DIR: str = BASE_DIR / "plots"
+
+@dataclass
+class IMAGE:
+    height: int = 224
+    width: int = 224

@@ -10,7 +10,9 @@ def load_resnet18():
 
     model = resnet18(weights=weight)
     print("Verify load path : ", torch.hub.get_dir())
+    return model
 
+def inspect_model(model):
     #Lets inspect model.
     print("\nModel ", model._get_name())
 
@@ -59,5 +61,9 @@ def load_resnet18():
     print("FC layer after : ", model.fc)
 
 ######################
+def main():
+    model = load_resnet18()
+    inspect_model(model)
 
-load_resnet18()
+if __name__ == "__main__":
+    main()
