@@ -77,6 +77,7 @@ def inspect_dataset(dataset):
         print("\ntrain_features_labelKey : ", train_features_labelKey, "\nType:", type(train_features_labelKey))
 
         print("\nLabels have property called (names) : ", train_features_labelKey.names, type(train_features_labelKey.names))
+        print("\nCount of classes (distinct labels) : ", len(train_features_labelKey.names))
         print("\nLabels name are subscriptable (indexable), index-0 : ", train_features_labelKey.names[0])
         print("\nTotal labels count : ", len(train_features_labelKey.names))
 
