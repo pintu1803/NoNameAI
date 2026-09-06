@@ -21,7 +21,7 @@ def load_resnet18():
 
     #Freeze the backbone
     for param in model.parameters():
-        param.requires_grad(False)
+        param.requires_grad = False
 
     #change the the model classifier
     print("\nFC layer before : ", model.fc)
