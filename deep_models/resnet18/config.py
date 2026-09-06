@@ -12,8 +12,12 @@ print("Project Base dir : ", BASE_DIR)
 @dataclass
 class PATH:
     CHECKPOINT_DIR: str = BASE_DIR / "checkpoints"
-    CHECKPOINT_PATH: str = CHECKPOINT_DIR / "best_val_acc_model.pth"
-    DOWNLOADE_MODEL_PATH: str = BASE_DIR / "model"
+
+    #update load path to latest
+    CHECKPOINT_PATH_FOR_LOAD: str = CHECKPOINT_DIR / "best_val_acc_model_2.pth"
+    #update save path to next custom name
+    CHECKPOINT_PATH_FOR_SAVE: str = CHECKPOINT_DIR / "best_val_acc_model_3.pth"
+    DOWNLOAD_MODEL_PATH: str = BASE_DIR / "model"
 
     DATASET_DIR: str = BASE_DIR / "dataset"
     PLOT_DIR: str = BASE_DIR / "plots"
@@ -35,7 +39,12 @@ class TrainConfig:
     t_max: int = 20
     epochs_count: int = 20
     batch_size: int = 32
-    test_batch_size: int = 16
-    lr: float = 0.001
-    decay: float = 0.002
+    #don't change test batch size
+    test_batch_size: int = 61
+    #Phase-1
+    # lr: float = 0.001
+    # decay: float = 0.002
+    #Phase-2
+    lr: float = 5e-5
+    decay: float = 0.001
     

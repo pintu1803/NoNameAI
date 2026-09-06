@@ -27,7 +27,8 @@ def showImage(sample, label, time=2):
     plt.close()
 
 #save model checkpoint
-def save_checkpoint(epoch, model, optimizer, scheduler, best_valid_acc, MODEL_CHECKPOINT_PATH):
+def save_checkpoint(epoch, model, optimizer, scheduler, best_valid_acc, MODEL_CHECKPOINT_PATH, PLOTS_DIR):
+    PLOTS_DIR.mkdir(exist_ok=True)
     torch.save({"epoch": epoch,
                 "model_state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
@@ -44,6 +45,13 @@ def load_checkpoint(checkpoint_path, model, optimizer, lr_scheduler):
     start_epoch = checkpoint["start_epoch"]
     best_valid_acc = checkpoint["best_valid_acc"]
     return start_epoch, best_valid_acc
+
+#load saved model weights only, not optimizer and scheduler
+def load_model_weights_only(checkpoint_path, model):
+    checkpoint = torch.load(checkpoint_path)
+    model.load_state_dict(checkpoint["model_state_dict"])
+    return checkpoint.get("best_valid_acc", 0)
+
 
 #plot two curves - train vs validation
 def plot_train_vs_validation_curve(PLOTS_DIR, plot_name, 
@@ -78,3 +86,24 @@ def print_comparison_table(train_loss, train_acc, val_loss, val_acc):
     for i in range(len(train_loss)):
         print(f"| {train_loss[i] : ^12.2f} | {train_acc[i] : ^16.2f} | {val_loss[i] : ^10.2f} | {val_acc[i] : ^14.2f} |")
     print("*"*65)
+
+## Testing curve
+def plot_testing_curve(PLOTS_DIR, plot_name, first_item, first_label, xlabel, ylabel):
+    #save in plots dir
+    PLOTS_DIR.mkdir(exist_ok=True)
+    PLOT = PLOTS_DIR / plot_name
+    
+    plt.plot(first_item, label=first_label)
+
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+    plt.legend()
+
+    plt.savefig(PLOT,
+                dpi=300,
+                bbox_inches="tight")
+
+    plt.show(block=False)
+    plt.pause(10)
+    plt.close()

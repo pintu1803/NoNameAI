@@ -28,6 +28,7 @@ def preprocessing_transform():
     only training data exclusively gets transformed.
     However, we need to resize and convert the testing data as per resnet architecture."""
     test_transform = transforms.Compose([
+        transforms.Lambda(lambda img: img.convert("RGB")),
         transforms.Resize(size=(IMAGE.height, IMAGE.width)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406],

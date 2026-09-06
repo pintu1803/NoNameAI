@@ -18,6 +18,9 @@ which converts them into tensor. list -> 1D Tensor
 Prediction is a tensor of size = number of classes. 
 """
 
+#Define loss function outside, in order to import in test
+loss_fn = nn.CrossEntropyLoss()
+
 def train_model(train_loader, valid_loader, model):
     """
     In this module we train our resnet18 model on our food dataset.
@@ -46,7 +49,6 @@ def train_model(train_loader, valid_loader, model):
     7. Print a complete table for stats comparison for loss and acc over train and validate
     8. Plot 2-in-1 plots for loss and accuracy.
     """
-    loss_fn = nn.CrossEntropyLoss()
 
     #define optimizer and lr scheduler
     optimizer = optim.AdamW(filter(lambda param: param.requires_grad, model.parameters()),
@@ -57,14 +59,25 @@ def train_model(train_loader, valid_loader, model):
                                                         eta_min=TrainConfig.eta_min)
 
     #===============================================
-    checkpoint_path = PATH.CHECKPOINT_PATH
-    if os.path.exists(checkpoint_path):
+    checkpoint_dir = PATH.CHECKPOINT_DIR
+    checkpoint_dir.mkdir(exist_ok=True)
+    checkpoint_path_load = PATH.CHECKPOINT_PATH_FOR_LOAD
+
+    if os.path.exists(checkpoint_path_load):
         myLog("Checkpoint found. Resume training (Fine Tuning)")
-        start_epoch, best_valid_acc = utils.load_checkpoint(checkpoint_path, model, optimizer, lr_scheduler)
+        #Phase-1:
+        # start_epoch, best_valid_acc = utils.load_checkpoint(checkpoint_path_load, model, optimizer, lr_scheduler)
+        #Phase-2:
+        best_valid_acc = utils.load_model_weights_only(checkpoint_path_load, model)
+        start_epoch = 1
     else:
         myLog("No checkpoint found. Starting fresh training (FT)")
         start_epoch = 1
         best_valid_acc = 0
+
+    #If previous loop finished completely, reset start point
+    # if start_epoch == TrainConfig.epochs_count + 1:
+    #     start_epoch = 1
     #===============================================
 
     def train(image, label):
@@ -78,7 +91,7 @@ def train_model(train_loader, valid_loader, model):
 
     def validate(image, label):
         model.eval()
-        with torch.no_grad():
+        with torch.inference_mode():
             pred = model(image)
             loss = loss_fn(pred, label)
             return pred, loss
@@ -132,10 +145,11 @@ def train_model(train_loader, valid_loader, model):
         validation_losses.append(valid_loss)
         validation_accuracies.append(valid_acc)
         #=======================================
+        checkpoint_path_save = PATH.CHECKPOINT_PATH_FOR_SAVE
         #Save the best accurate model so far
         if valid_acc > best_valid_acc:
             best_valid_acc = valid_acc
-            utils.save_checkpoint(epoch, model, optimizer, lr_scheduler, best_valid_acc, checkpoint_path)
+            utils.save_checkpoint(epoch, model, optimizer, lr_scheduler, best_valid_acc, checkpoint_path_save, checkpoint_dir)
 
         #=======================================
         addLine()
