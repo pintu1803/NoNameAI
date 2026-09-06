@@ -1,15 +1,39 @@
 
 from torchvision.models import resnet18, ResNet18_Weights
 import torch
-from config import PATH
+from config import PATH, IMAGE, TrainConfig
 
 def load_resnet18():
+    """
+    Note: Order of steps matters.
+    1. Load the model architecture and pretrainied weights from cache dir.
+    2. Freeze the backbone
+    3. Replace the FC layer with number of classes required as per dataset.
+    4. Put all BN modules in eval mode.
+    6. Else, continue with fresh model.
+    """
     #define path to store model and weights
     torch.hub.set_dir(PATH.DOWNLOADE_MODEL_PATH)
     weight = ResNet18_Weights.DEFAULT
 
     model = resnet18(weights=weight)
     print("Verify load path : ", torch.hub.get_dir())
+
+    #Freeze the backbone
+    for param in model.parameters():
+        param.requires_grad(False)
+
+    #change the the model classifier
+    print("\nFC layer before : ", model.fc)
+    model.fc = torch.nn.Linear(model.fc.in_features, IMAGE.classes)
+    print("FC layer after : ", model.fc)
+
+    #Put the BN modules in eval mode
+    for module in model.modules():
+        if isinstance(module, torch.nn.BatchNorm2d):
+            module.eval()
+
+    #Return the model
     return model
 
 def inspect_model(model):
@@ -54,11 +78,6 @@ def inspect_model(model):
 
     relu_list = [layer for layer, name in model.named_modules() if 'relu' in layer]
     print("\nNumber of relu activation : ", len(relu_list))
-
-    #change the the model classifier to 10 for cifar10 fine tuning
-    print("\nFC layer before : ", model.fc)
-    model.fc = torch.nn.Linear(model.fc.in_features, 10)
-    print("FC layer after : ", model.fc)
 
 ######################
 def main():
