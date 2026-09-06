@@ -16,6 +16,9 @@ def test_model(modelObj, test_loader):
     test_losses = []
     test_accuracy = []
 
+    total_correct_pred = 0
+    total_set_size = 0
+
     with torch.inference_mode():
         for idx, (image, label) in enumerate(test_loader):
             pred = modelObj.model(image)
@@ -30,8 +33,12 @@ def test_model(modelObj, test_loader):
             test_losses.append(loss.item())
             test_accuracy.append(accuracy)
 
+            #calculate for overall
+            total_set_size += len(label)
+            total_correct_pred += correct
+
     #Overall accuracy of the model
-    acc = (sum(test_accuracy)/len(test_accuracy)).item()
+    acc = (total_correct_pred*100/total_set_size)
     print(f"Overall testing accuracy : {acc : .3f} %")
 
     #inference mode ends here

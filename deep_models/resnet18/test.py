@@ -10,10 +10,10 @@ from datetime import datetime
 def test_model(test_loader, model, best_model_load_path, loss_fn):
 
     if not os.path.exists(best_model_load_path):
-        myLog("No checkpoint found. Starting fresh training (FT)")
+        myLog("No checkpoint found. Abort Testing")
         sys.exit(1)
 
-    myLog("Checkpoint found. Resume training (Fine Tuning)")
+    myLog("Checkpoint found. Using Model for Inference")
     utils.load_model_weights_only(best_model_load_path, model)
 
     test_batch_accuracies = []
@@ -21,9 +21,6 @@ def test_model(test_loader, model, best_model_load_path, loss_fn):
     #==========================================
     model.eval()
     with torch.inference_mode():
-        test_loss = 0
-        test_acc = 0
-        correct_batch_pred = 0
         total_correct_pred = 0
         total_set_size = 0
 
@@ -45,15 +42,16 @@ def test_model(test_loader, model, best_model_load_path, loss_fn):
 
             #=======================================
             addLine()
-            print(f"Batch : {idx}")
-            print(f"Loss = {test_loss:^10.3f}, Accuracy={test_acc:^10.3f}")
+            print(f"Batch : {idx+1}")
+            print(f"Loss = {test_loss:.3f}, Accuracy = {test_acc:.3f}%")
 
     #================================================
     total_acc = total_correct_pred*100/total_set_size
-    myLog(f"Total test accuracy = {total_acc:^10.3f}")
+    myLog(f"Total test accuracy = {total_acc:.3f} %")
 
-    total_avg_loss = sum(test_batch_losses)/total_set_size
+    total_avg_loss = sum(test_batch_losses)/len(test_batch_losses)
     myLog(f"Net avg test loss = {total_avg_loss:^10.3f}")
+    addLine()
     #================================================
 
     PLOTS_DIR = PATH.PLOT_DIR
@@ -63,4 +61,4 @@ def test_model(test_loader, model, best_model_load_path, loss_fn):
 
     #Plot the loss and accuracy curves
     utils.plot_testing_curve(PLOTS_DIR, LOSS_PLOT_NAME, test_batch_losses, "Testing Loss", "Batch", "Loss")
-    utils.plot_testing_curve(PLOTS_DIR, ACC_PLOT_NAME, test_batch_accuracies, "Testing Accuracy", "Batch", "Accuracy")
+    utils.plot_testing_curve(PLOTS_DIR, ACC_PLOT_NAME, test_batch_accuracies, f"Testing Accuracy, overall {total_acc:.2f}%", "Batch", "Accuracy")
