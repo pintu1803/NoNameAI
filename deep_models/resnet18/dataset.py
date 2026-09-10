@@ -26,6 +26,9 @@ def load_data_from_cache():
     image is PIL image - Python Image Library Object
     label has one instance field/parameter called 'names'
     which is a list of actual str labels -so it names list is indexable
+
+    'label': ClassLabel(names=['biryani', 'cholebhature', 'dabeli', 'dal', 'dhokla', 'dosa', 
+    'jalebi', 'kathiroll', 'kofta', 'naan', 'pakora', 'paneer', 'panipuri', 'pavbhaji', 'vadapav'])
     """
     myLog("WELCOME TO RESNET18 FINE TUNING")
 
